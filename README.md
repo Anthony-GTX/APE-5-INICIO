@@ -1,110 +1,117 @@
-# APE 5 – Manejo de archivos en Java
+# APE 5 - Manejo de Archivos y Flujos de Datos (java.io)
 
-Actividad práctica experimental (APE 5, primera parte) de la asignatura de programación. Reúne seis programas en Java que trabajan con archivos de texto: crear, escribir, agregar información (*append*) y eliminar, usando `File`, `FileWriter`, `BufferedWriter` y `Scanner`.
+**Nombre:** Anthony Daniel Armas Jaya
+**Curso:** 1er Semestre
+**Carrera:** Ingeniería en Software
+**Fecha:** 05/11/2026
 
-## Autor
+## Descripción
 
-| | |
-|---|---|
-| **Nombre** | Anthony Daniel Armas Jaya |
-| **Curso** | 1er Semestre |
-| **Carrera** | Ingeniería en Software |
-| **Fecha** | 05/11/2026 |
+Repositorio con los programas de la guía APE 5, módulo Manejo de Archivos y Flujos de Datos. Los ejercicios trabajan con las clases `File`, `FileWriter` y `BufferedWriter` del paquete `java.io`: comprobación de existencia, creación, escritura por líneas, modo append y eliminación de ficheros, con manejo de `IOException`.
 
-## Estructura del repositorio
+## Estructura
 
 ```
-APE-5-INICIO/
-├── p1_e1/CrearFichero.java
-├── p1_e2/EscribirFichero.java
-├── p1_e3/EliminarFichero.java
-├── p2_e1/RegistroEstudiantes.java
-├── p2_e2/RegistroProductos.java
-├── p2_e3/RegistroVentas.java
-├── APE5_Anthony_Armas.pdf
+APE5-Manejo-de-Archivos/
+├── Ejercicio1MetadatosFile.java
+├── Ejercicio2EscrituraBufferedWriter.java
+├── Ejercicio3ModoAppendFileWriter.java
+├── Ejercicio4CicloVidaYBorradoSeguro.java
 └── README.md
 ```
 
-`p1` = Parte 1 (Ejercicios APE) · `p2` = Parte 2 (Ejercicios de APE clase 2) · `eN` = número de ejercicio.
+## Requisitos
+
+- JDK 11 o superior (se probó con OpenJDK 21)
+- Terminal abierta en la carpeta del proyecto
+
+## Compilación y ejecución
+
+```bash
+javac Ejercicio1MetadatosFile.java
+java Ejercicio1MetadatosFile
+```
+
+Con JDK 11 o superior también se puede ejecutar directamente el archivo fuente:
+
+```bash
+java Ejercicio1MetadatosFile.java
+```
+
+El Ejercicio 3 requiere que el Ejercicio 2 se haya ejecutado antes, porque agrega contenido a `materias.txt`.
 
 ## Ejercicios
 
-### Parte 1 – Ejercicios APE
+### Ejercicio 1 - Exploración y gestión de metadatos con File
 
-| # | Programa | Descripción | Conceptos clave |
-|---|----------|-------------|-----------------|
-| 1 | [`CrearFichero`](p1_e1/CrearFichero.java) | Crea `curso.txt`, indica si se creó o ya existía y muestra su nombre. | `File`, `createNewFile()`, `getName()`, `try-catch` |
-| 2 | [`EscribirFichero`](p1_e2/EscribirFichero.java) | Lee un mensaje por teclado y lo agrega al final de `estudiantes.txt` (debe existir). | `Scanner`, `FileWriter(…, true)`, `write()`, `close()` |
-| 3 | [`EliminarFichero`](p1_e3/EliminarFichero.java) | Elimina `estudiantes.txt` y confirma el resultado. | `File`, `delete()`, `if-else` |
+Archivo: `Ejercicio1MetadatosFile.java`
 
-### Parte 2 – Ejercicios de APE clase 2
+Trabaja con la ruta `datos/prueba.txt`. Verifica con `exists()` si el recurso está disponible, lo crea con `createNewFile()` si no existe (dentro de un bloque `try-catch` para `IOException`) y muestra el nombre con `getName()` y la ruta con `getPath()`.
 
-| # | Programa | Descripción | Conceptos clave |
-|---|----------|-------------|-----------------|
-| 1 | [`RegistroEstudiantes`](p2_e1/RegistroEstudiantes.java) | Registra 3 estudiantes en `estudiantes.txt` (nombre y calificación, dos líneas cada uno). | `Scanner`, `BufferedWriter`, `FileWriter`, `finally` |
-| 2 | [`RegistroProductos`](p2_e2/RegistroProductos.java) | Registra productos con precio y cantidad, calcula el valor total y lo guarda en `productos.txt` sin borrar los anteriores. | `BufferedWriter`, modo *append*, cálculo `precio × cantidad` |
-| 3 | [`RegistroVentas`](p2_e3/RegistroVentas.java) | Registra ventas hasta escribir `fin`; aplica 10 % de descuento si el subtotal es ≥ $100 y guarda el total acumulado en `ventas.txt`. | `while`, condicionales, *append*, acumuladores |
-
-## Requisitos
-
-- Java JDK 8 o superior (`java -version` y `javac -version` para comprobarlo).
-- Una terminal, o un IDE como IntelliJ IDEA, NetBeans, Eclipse o VS Code.
-
-## Cómo compilar y ejecutar
-
-Cada ejercicio es independiente. Por ejemplo, para el ejercicio 3 de la Parte 2:
-
-```bash
-cd p2_e3
-javac RegistroVentas.java
-java RegistroVentas
-```
-
-Los archivos `.txt` se generan en la carpeta desde la que se ejecuta el programa.
-
-> **Orden recomendado para la Parte 1:** ejecuta primero `CrearFichero`; luego crea o copia un `estudiantes.txt` en la carpeta de `EscribirFichero` (el enunciado exige que exista); por último ejecuta `EliminarFichero` en la carpeta donde está `estudiantes.txt`.
-
-## Ejemplos de ejecución
-
-**Registro de ventas (`RegistroVentas`)**
+Salida en la primera ejecución:
 
 ```
-Nombre del producto (o 'fin' para terminar): Cuaderno
-Precio: 2.5
-Cantidad vendida: 10
-Subtotal: $25.00 | Descuento: $0.00 | Total a pagar: $25.00
-Nombre del producto (o 'fin' para terminar): Laptop
-Precio: 450
-Cantidad vendida: 1
-Subtotal: $450.00 | Descuento: $45.00 | Total a pagar: $405.00
-Nombre del producto (o 'fin' para terminar): fin
-Total acumulado de ventas: $430.00
+El archivo fue creado correctamente.
+Nombre del archivo: prueba.txt
+Ruta del archivo: datos/prueba.txt
 ```
 
-Contenido resultante de `ventas.txt`:
+Salida en la segunda ejecución:
 
 ```
-Producto: Cuaderno | Subtotal: $25.00 | Descuento: $0.00 | Total: $25.00
-Producto: Laptop | Subtotal: $450.00 | Descuento: $45.00 | Total: $405.00
-TOTAL ACUMULADO DE VENTAS: $430.00
+El archivo ya existe.
+Nombre del archivo: prueba.txt
+Ruta del archivo: datos/prueba.txt
 ```
 
-**Registro de productos (`RegistroProductos`)**
+### Ejercicio 2 - Escritura estructurada por líneas con BufferedWriter
+
+Archivo: `Ejercicio2EscrituraBufferedWriter.java`
+
+Crea `materias.txt` mediante un `BufferedWriter` enlazado con un `FileWriter`. Escribe cinco asignaturas y usa `newLine()` para dejar una por línea. El flujo se cierra con `close()` en el bloque `finally`.
+
+Contenido de `materias.txt`:
 
 ```
-Nombre del producto: Teclado
-Precio: 25.50
-Cantidad disponible: 10
-Producto guardado. Valor total: $255.00
+Álgebra Lineal
+Física
+Lógica
+Programación
+Matemática Discreta
 ```
 
-Contenido de `productos.txt` tras dos ejecuciones (se conserva el registro anterior):
+### Ejercicio 3 - Control del modo de apertura (append vs sobrescribir)
+
+Archivo: `Ejercicio3ModoAppendFileWriter.java`
+
+Abre `materias.txt` con `new FileWriter("materias.txt", true)`. El segundo parámetro en `true` activa el modo de adición, por lo que las dos nuevas asignaturas se agregan al final sin borrar el contenido anterior.
+
+Contenido de `materias.txt` después de la ejecución:
 
 ```
-Producto: Teclado | Precio: $25.50 | Cantidad: 10 | Valor total: $255.00
-Producto: Mouse | Precio: $12.00 | Cantidad: 5 | Valor total: $60.00
+Álgebra Lineal
+Física
+Lógica
+Programación
+Matemática Discreta
+Inglés
+Fundamentos de Software
 ```
 
-## Entrega
+### Ejercicio 4 - Ciclo de vida completo y borrado seguro
 
-El documento [`APE5_Anthony_Armas.pdf`](APE5_Anthony_Armas.pdf) incluye el código y la salida de cada uno de los seis programas.
+Archivo: `Ejercicio4CicloVidaYBorradoSeguro.java`
+
+Representa `datos/temporal.txt` con un objeto `File`. Si no existe, lo crea controlando `IOException`. La variable `boolean confirmarBorrado = true;` simula la confirmación del usuario, y `delete()` solo se ejecuta cuando es verdadera. Al final imprime el resultado booleano de la eliminación.
+
+Salida:
+
+```
+El archivo fue creado correctamente.
+Resultado de la eliminación: true
+```
+
+## Notas
+
+- Los programas crean la carpeta `datos` si no existe, porque `createNewFile()` falla cuando la carpeta contenedora no está creada.
+- Los archivos de texto se guardan con la codificación predeterminada de Java. En Java 18 o superior es UTF-8, por lo que las tildes se conservan correctamente.
